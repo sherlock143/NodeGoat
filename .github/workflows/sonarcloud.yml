@@ -1,0 +1,28 @@
+name: SonarCloud
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK (for Java projects; skip for Node/Python)
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          projectKey: NodeGoat 
+          organization: azuredevopsdevsecopsdemoorg
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
